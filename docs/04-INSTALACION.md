@@ -38,7 +38,7 @@ cp .env.example .env          # si existe; ver más abajo
 docker compose -f docker-compose.dev.yml up -d
 ```
 
-### Qué publica el compose de desarrollo
+### Qué pública el compose de desarrollo
 
 ```
   postgres   127.0.0.1:5432
@@ -83,7 +83,7 @@ cd deploy
 docker compose -f docker-compose.prod.yml up -d
 ```
 
-**Lo único que publica puertos es Caddy**: `80`, `443` y `443/udp`. PostgreSQL,
+**Lo único que pública puertos es Caddy**: `80`, `443` y `443/udp`. PostgreSQL,
 Redis, la API y la cola **no tienen `ports:`**, quedan en la red interna de
 Compose. La razón es que la Row Level Security protege las filas, pero un puerto
 de PostgreSQL abierto al mundo es una puerta que no depende de las políticas.
