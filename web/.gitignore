@@ -1,0 +1,39 @@
+# =============================================================================
+# Fotografía: interfaz
+# =============================================================================
+# Este `.gitignore` cubre la interfaz. El de la raíz de la aplicación cubre las
+# tres carpetas; este es el que más se parece a los de las demás aplicaciones de
+# Hefesto, para que quien llegue por `web/` encuentre lo que espera.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Dependencias
+# -----------------------------------------------------------------------------
+node_modules
+
+# -----------------------------------------------------------------------------
+# Compilación
+# -----------------------------------------------------------------------------
+# `.nuxt` y `.output` se generan en la imagen de Docker. Versionar un `.output`
+# de otra máquina es la forma de desplegar el código de alguien que ya no está.
+.nuxt
+.output
+.nitro
+.cache
+dist
+
+# -----------------------------------------------------------------------------
+# Configuración
+# -----------------------------------------------------------------------------
+.env
+.env.production
+.env.*.local
+
+# -----------------------------------------------------------------------------
+# Sistema y editores
+# -----------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.log
+.idea
+.vscode

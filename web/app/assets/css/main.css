@@ -1,0 +1,364 @@
+/* =============================================================================
+   Fotografía: hoja de estilo única.
+   =============================================================================
+   POR QUÉ UNA SOLA HOJA Y SIN MARCO DE ESTILO
+   ---------------------------------------------
+   Un estudio chico necesita pantallas que funcionen, no una biblioteca de
+   componentes con su propio sistema de diseño que alguien tenga que mantener. Por
+   eso son estilos planos, en variables de CSS, sin dependencias.
+
+   LAS TRES REGLAS DE LA HOJA
+   -------------------------
+   1. Los colores de estado son los del dominio, no colores genéricos. Un
+      `pendiente_seleccion` NO se pinta como un error: es un estado de trabajo
+      normal, y pintarlo en rojo entrena al equipo a ignorar la pantalla. Ver
+      docs/03.
+   2. `.vacio` existe para los estados sin dato. Cuando el plazo no está
+      configurado, la pantalla muestra el hueco con su explicación, no un `0` ni
+      una fecha inventada.
+   3. `.sin-dato` es lo que aparece cuando la API devolvió un 404. No se
+      reintenta ni se deduce: puede significar que el recurso no existe o que el
+      permiso lo escondió. Ver docs/03.
+   ============================================================================= */
+
+:root {
+    color-scheme: light;
+
+    --tinta: #1b1d1f;
+    --tinta-suave: #5b6167;
+    --papel: #ffffff;
+    --papel-suave: #f4f5f6;
+    --borde: #d9dcdf;
+
+    --marca: #2f4f6f;
+    --marca-claro: #eaf0f7;
+
+    /* Estados del dominio. `trabajo` es el color de "pendiente de selección":
+       no es un error, es una espera. */
+    --agenda: #6b7280;
+    --trabajo: #9a6b00;
+    --entregado: #2f6b45;
+    --alerta: #9b2c2c;
+
+    --radio: 6px;
+    --espacio: 12px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tinta);
+    background: var(--papel-suave);
+}
+
+h1,
+h2,
+h3 {
+    margin: 0 0 var(--espacio);
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+h2 {
+    font-size: 1.15rem;
+}
+
+h3 {
+    font-size: 1rem;
+}
+
+a {
+    color: var(--marca);
+}
+
+/* -----------------------------------------------------------------------------
+   Estructura
+   -------------------------------------------------------------------------- */
+
+.pantalla {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: calc(var(--espacio) * 2) var(--espacio);
+}
+
+.tarjeta {
+    background: var(--papel);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    padding: calc(var(--espacio) * 1.5);
+    margin-bottom: calc(var(--espacio) * 1.5);
+}
+
+.fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.columnas {
+    display: grid;
+    gap: calc(var(--espacio) * 1.5);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.tenue {
+    color: var(--tinta-suave);
+    font-size: 0.9rem;
+}
+
+/* -----------------------------------------------------------------------------
+   Tablas
+   -------------------------------------------------------------------------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--papel);
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--borde);
+    vertical-align: top;
+}
+
+th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--tinta-suave);
+}
+
+tbody tr:hover {
+    background: var(--papel-suave);
+}
+
+/* -----------------------------------------------------------------------------
+   Estados del dominio
+   -----------------------------------------------------------------------------
+   `.pendiente_seleccion` es una espera, no una falla. Se pinta con el color de
+   trabajo y nunca con el de alerta.
+   -------------------------------------------------------------------------- */
+
+.estado {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    border: 1px solid currentColor;
+}
+
+.estado-agendada {
+    color: var(--agenda);
+}
+
+.estado-realizada {
+    color: var(--marca);
+    background: var(--marca-claro);
+}
+
+.estado-pendiente_seleccion {
+    color: var(--trabajo);
+}
+
+.estado-entregada {
+    color: var(--entregado);
+}
+
+.estado-vencido {
+    color: var(--alerta);
+    font-weight: 600;
+}
+
+/* -----------------------------------------------------------------------------
+   Botones y formularios
+   -------------------------------------------------------------------------- */
+
+.boton {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: var(--radio);
+    border: 1px solid var(--marca);
+    background: var(--marca);
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.boton-secundario {
+    background: var(--papel);
+    color: var(--marca);
+}
+
+.boton[disabled],
+.boton[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--tinta-suave);
+    margin-bottom: 4px;
+}
+
+input,
+select,
+textarea {
+    font: inherit;
+    padding: 7px 9px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    background: var(--papel);
+    color: var(--tinta);
+    width: 100%;
+}
+
+.campo {
+    margin-bottom: var(--espacio);
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+    margin-top: 4px;
+}
+
+/* -----------------------------------------------------------------------------
+   Los tres estados que toda pantalla necesita
+   -----------------------------------------------------------------------------
+   - `.cargando`: se está pidiendo.
+   - `.vacio`: no hay nada, y eso es todo lo que hay que decir.
+   - `.sin-dato`: la API no devolvió nada. Puede ser que no exista o que el
+     permiso lo escondió, y la interfaz NO debe intentar distinguirlo. Ver docs/03.
+   -------------------------------------------------------------------------- */
+
+.cargando {
+    color: var(--tinta-suave);
+    padding: calc(var(--espacio) * 2);
+    text-align: center;
+}
+
+.vacio {
+    padding: calc(var(--espacio) * 2);
+    text-align: center;
+    color: var(--tinta-suave);
+    background: var(--papel-suave);
+    border-radius: var(--radio);
+}
+
+.sin-dato {
+    padding: calc(var(--espacio) * 2);
+    text-align: center;
+    color: var(--tinta-suave);
+}
+
+.aviso {
+    padding: 10px 12px;
+    border-radius: var(--radio);
+    border: 1px solid var(--trabajo);
+    background: #fdf6e3;
+    margin-bottom: var(--espacio);
+}
+
+.aviso-error {
+    border-color: var(--alerta);
+    background: #fbeaea;
+}
+
+.aviso-ok {
+    border-color: var(--entregado);
+    background: #eaf4ed;
+}
+
+/* -----------------------------------------------------------------------------
+   El desglose del saldo
+   -----------------------------------------------------------------------------
+   Las cifras del desglose van en una grilla con su rótulo. Un saldo mostrado
+   como un número suelto se lee mal: el estudio necesita ver el precio, lo
+   entregado, lo que falta y lo que falta cobrar, por separado.
+   -------------------------------------------------------------------------- */
+
+.desglose {
+    display: grid;
+    gap: var(--espacio);
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.cifra {
+    border: 1px solid var(--borde);
+    border-radius: var(--radio);
+    padding: 10px 12px;
+    background: var(--papel);
+}
+
+.cifra dt {
+    font-size: 0.8rem;
+    color: var(--tinta-suave);
+    margin: 0 0 4px;
+}
+
+.cifra dd {
+    margin: 0;
+    font-size: 1.15rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.cifra-alerta {
+    border-color: var(--alerta);
+}
+
+.cifra-lista dl {
+    margin: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   Galería de fotos
+   -------------------------------------------------------------------------- */
+
+.galeria {
+    display: grid;
+    gap: var(--espacio);
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.foto {
+    border: 2px solid var(--borde);
+    border-radius: var(--radio);
+    padding: var(--espacio);
+    cursor: pointer;
+    background: var(--papel);
+}
+
+.foto-elegida {
+    border-color: var(--marca);
+    background: var(--marca-claro);
+}
+
+.foto-sin-imagen {
+    aspect-ratio: 3 / 2;
+    background: var(--papel-suave);
+    border-radius: var(--radio);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tinta-suave);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 6px;
+}
