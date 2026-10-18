@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 /**
@@ -25,6 +26,10 @@ use Illuminate\Http\Request;
  */
 abstract class Controller
 {
+    // El método `authorize()` que usan los controladores. Cuando la `Policy`
+    // rechaza, lanza `AuthorizationException` y `bootstrap/app.php` la traduce a
+    // 404. Ver docs/03.
+    use AuthorizesRequests;
     /**
      * La persona de la petición, o `null` si no hay sesión.
      */

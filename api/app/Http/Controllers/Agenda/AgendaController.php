@@ -41,7 +41,7 @@ class AgendaController extends Controller
     /**
      * La agenda de un rango de fechas.
      */
-    public function show(Request $peticion): JsonResponse
+    public function agenda(Request $peticion): JsonResponse
     {
         $this->usuarioObligatorio($peticion);
 
@@ -95,9 +95,9 @@ class AgendaController extends Controller
      *
      * @return JsonResponse
      */
-    public function tipos(): JsonResponse
+    public function tipos(Request $peticion): JsonResponse
     {
-        $this->usuarioObligatorio($peticion = request());
+        $this->usuarioObligatorio($peticion);
 
         return response()->json([
             'tipos' => array_map(static fn (TipoSesion $tipo): array => [
@@ -169,7 +169,7 @@ class AgendaController extends Controller
         ], 201);
     }
 
-    public function show_(Request $peticion, Sesion $sesion): JsonResponse
+    public function show(Request $peticion, Sesion $sesion): JsonResponse
     {
         $this->usuarioObligatorio($peticion);
 
